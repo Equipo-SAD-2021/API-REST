@@ -100,7 +100,7 @@ class ShoppingCartGenerator {
             if (response.status == 200) {
                 return new ShoppingCart(response.data.ip, response.data.port);
             } else return null;
-        }).catch((err) => {console.log(err); return null;});
+        }).catch((err) => {return null;});
     }
 }
 
