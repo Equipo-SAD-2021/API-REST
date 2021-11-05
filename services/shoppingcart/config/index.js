@@ -15,17 +15,26 @@ module.exports = {
     version,
     serviceTimeout: 30,
     log: () => getLogger(name, version, 'debug'),
+    serviceRegistryURL: "localhost:3000",
+    databaseServiceName: "database-service",
+    databaseServiceVersion: "1.0.0"
   },
   production: {
     name,
     version,
     serviceTimeout: 30,
     log: () => getLogger(name, version, 'info'),
+    serviceRegistryURL: "localhost:3000",
+    databaseServiceName: "database-service",
+    databaseServiceVersion: "1.0.0"
   },
   test: {
     name,
     version,
     serviceTimeout: 30,
     log: () => getLogger(name, version, 'fatal'),
+    serviceRegistryURL: "localhost:3000",
+    databaseServiceName: "database-service",
+    databaseServiceVersion: "1.0.0"
   },
 };

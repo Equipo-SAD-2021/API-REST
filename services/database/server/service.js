@@ -21,6 +21,7 @@ async function Init(config) {
             var itemName = req.query.name;
             // Search the item in the database, and return the result as json.
             idbc.GetItem(itemName).then((item) => {
+                log.debug("Returning item: " + item);
                 res.json(item);
             });
         });
