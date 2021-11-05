@@ -4,6 +4,7 @@ const Item = require("./Item").Item;
 
 const service = express();
 
+// Init function, creates the express service and the database connection, returning them.
 async function Init(config) {
     const log = config.log();
     return ItemDBController.Connect(config.mongodburl).then(async (idbc) => {
@@ -14,9 +15,14 @@ async function Init(config) {
             return next();
             });
         }
-    
+        
+        // Item search api, form the item name, returns the stored Item object (name and amount).
         service.get('/item', (req, res, next) => {
-            return next('Not implemented');
+            var itemName = req.query.name;
+            // Search the item in the database, and return the result as json.
+            idbc.GetItem(itemName).then((item) => {
+                res.json(item);
+            });
         });
     
         // eslint-disable-next-line no-unused-vars

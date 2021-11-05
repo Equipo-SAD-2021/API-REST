@@ -6,6 +6,7 @@ const config = require('../config')[process.env.NODE_ENV || 'development'];
 
 const log = config.log();
 
+// Call Init function from the "service" module. Returns a promise.
 require('../server/service').Init(config).then(({service, idbc}) => {
     if (service == null) {
         log.error("Failed initialising service, exiting...");
@@ -28,11 +29,11 @@ require('../server/service').Init(config).then(({service, idbc}) => {
             );
         });
     
-        var dbCleanedUp = false;
         async function databaseCleanup() {
-            if (dbCleanedUp === false && idbc != null) {
+            if (idbc != null) {
+                log.info("Closing DB connection.");
                 await idbc.Close();
-                dbCleanedUp = true;
+                process.exit();
             }
         }
     
