@@ -27,7 +27,8 @@ module.exports = (config) => {
         ShoppingCartGenerator.GetCart(config.serviceRegistryURL, config.databaseServiceName, config.databaseServiceVersion).then((cart) => {
             log.debug("Generated new cart: " + cart);
             if (cart == null) {
-                res.json(null);
+                res.status(500);
+                res.json({error: "Internal server errror."});
             } else {
                 var uuid = uuidv4();
                 availableCarts[uuid] = cart;
@@ -40,10 +41,8 @@ module.exports = (config) => {
         var uuid = req.query.uuid;
         if (uuid in availableCarts) {
             delete availableCarts[req.query.uuid];
-            res.status(200);
             res.json({});
         } else {
-            res.status(404);
             res.json({error: "Specified cart not found"});
         }
     });
@@ -54,7 +53,6 @@ module.exports = (config) => {
             var cart = availableCarts[uuid];
             res.json(cart.GetContents());
         } else {
-            res.status(404);
             res.json({error: "Specified cart not found"});
         }
     });
@@ -66,10 +64,8 @@ module.exports = (config) => {
         if (isNaN(amount)) amount = null;
 
         if (!(uuid in availableCarts)) {
-            res.status(404);
             res.json({error: "Specified cart not found"});            
         } else if (item == null || amount == null) {
-            res.status(403);
             res.json({error: "Item or amount not specified."});
         } else {
             var cart = availableCarts[uuid];
@@ -95,10 +91,8 @@ module.exports = (config) => {
         if (isNaN(amount)) amount = null;
 
         if (!(uuid in availableCarts)) {
-            res.status(404);
             res.json({error: "Specified cart not found"});            
         } else if (item == null || amount == null) {
-            res.status(403);
             res.json({error: "Item or amount not specified."});
         } else {
             var cart = availableCarts[uuid];

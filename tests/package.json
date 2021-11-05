@@ -1,0 +1,14 @@
+{
+  "name": "shoppingcarttests",
+  "version": "1.0.0",
+  "description": "Tests for the Shopping Cart REST API",
+  "main": "CarroCompraTest.js",
+  "scripts": {
+    "test": "node CarroCompraTest.js"
+  },
+  "author": "Pablo Moreira Flors, Borja Sanz Gresa, Antonio Martinez Leal",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0"
+  }
+}

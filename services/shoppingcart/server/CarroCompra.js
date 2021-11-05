@@ -32,7 +32,7 @@ class ShoppingCart {
             return axios.get(`http://${this.dbIP}:${this.dbPort}/item?${querySerialize(params)}`).then((response) => {
                 if (response.status == 200) {
                     if (response.data == null) {
-                        err([403, "Item not found in the warehouse."]);
+                        err([200, "Item not found in the warehouse."]);
                     }
                     var dbItem = new Item(response.data.name, response.data.amount);
                     var cartAmount = 0;
@@ -41,7 +41,7 @@ class ShoppingCart {
                         cartAmount = this.items[item.GetName()].GetAmount();
                     }
                     if (cartAmount + item.GetAmount() > dbItem.GetAmount()) {
-                        err([403, "Not enough stock in the warehouse. Requested (" + (cartAmount + item.GetAmount()) + ") but stock is (" + dbItem.GetAmount() + ")."]);
+                        err([200, "Not enough stock in the warehouse. Requested (" + (cartAmount + item.GetAmount()) + ") but stock is (" + dbItem.GetAmount() + ")."]);
                     } else {
                         if (hasItem) {
                             this.items[item.GetName()].AddAmount(item.GetAmount());
@@ -65,7 +65,7 @@ class ShoppingCart {
     Remove(item) {
         return new Promise((res,err) => {
             if (!(item.GetName() in this.items)) {
-                err([403, "Item not present in cart."]);
+                err([200, "Item not present in cart."]);
             } else {
                 this.items[item.GetName()].RemoveAmount(item.GetAmount());
                 if (this.items[item.GetName()].GetAmount() === 0) {
